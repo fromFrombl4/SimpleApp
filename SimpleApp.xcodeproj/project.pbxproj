@@ -20,6 +20,8 @@
 		EC15808025B758E60000B4A6 /* TestingSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15807F25B758E60000B4A6 /* TestingSceneDelegate.swift */; };
 		EC15808425B7591C0000B4A6 /* TestingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15808325B7591C0000B4A6 /* TestingViewController.swift */; };
 		EC15808F25B75AEE0000B4A6 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */; };
+		ECCB8B9225C0560E00E35968 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB8B9125C0560E00E35968 /* Manager.swift */; };
+		ECCB8B9625C0565700E35968 /* ManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB8B9525C0565700E35968 /* ManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +57,8 @@
 		EC15807F25B758E60000B4A6 /* TestingSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingSceneDelegate.swift; sourceTree = "<group>"; };
 		EC15808325B7591C0000B4A6 /* TestingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingViewController.swift; sourceTree = "<group>"; };
 		EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
+		ECCB8B9125C0560E00E35968 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
+		ECCB8B9525C0565700E35968 /* ManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +128,7 @@
 				EC15807725B7568B0000B4A6 /* main.swift */,
 				EC15801825B7501C0000B4A6 /* AppDelegate.swift */,
 				EC15801A25B7501C0000B4A6 /* SceneDelegate.swift */,
+				ECCB8B9125C0560E00E35968 /* Manager.swift */,
 				EC15801C25B7501C0000B4A6 /* ViewController.swift */,
 				EC15806725B754340000B4A6 /* ViewController.xib */,
 				EC15802125B7501F0000B4A6 /* Assets.xcassets */,
@@ -139,6 +144,7 @@
 				EC15808925B75AD20000B4A6 /* Setup */,
 				EC15803125B7501F0000B4A6 /* Info.plist */,
 				EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */,
+				ECCB8B9525C0565700E35968 /* ManagerTests.swift */,
 			);
 			path = SimpleAppTests;
 			sourceTree = "<group>";
@@ -325,6 +331,7 @@
 				EC15801925B7501C0000B4A6 /* AppDelegate.swift in Sources */,
 				EC15807825B7568B0000B4A6 /* main.swift in Sources */,
 				EC15801B25B7501C0000B4A6 /* SceneDelegate.swift in Sources */,
+				ECCB8B9225C0560E00E35968 /* Manager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -333,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC15808025B758E60000B4A6 /* TestingSceneDelegate.swift in Sources */,
+				ECCB8B9625C0565700E35968 /* ManagerTests.swift in Sources */,
 				EC15807225B756320000B4A6 /* TestAppDelegate.swift in Sources */,
 				EC15808F25B75AEE0000B4A6 /* ViewControllerTests.swift in Sources */,
 				EC15808425B7591C0000B4A6 /* TestingViewController.swift in Sources */,
