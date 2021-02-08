@@ -64,7 +64,7 @@ class ManagerTests: XCTestCase {
         var items: [Int]!
 
         Manager.shared
-            .loadItems(offset: 96, limit: 5) {
+            .loadItems(offset: 100, limit: 5) {
                 items = $0
                 expectation.fulfill()
             }
