@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		135F79D3DA355E5DB06173CC /* Pods_SimpleAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E428CAD5D1FFD29AE5A8C2 /* Pods_SimpleAppTests.framework */; };
+		59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */; };
+		59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */; };
 		641AD20475F1347D371412B3 /* Pods_SimpleApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A8E88ECA98F224F18523F33 /* Pods_SimpleApp.framework */; };
 		EC15801925B7501C0000B4A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15801825B7501C0000B4A6 /* AppDelegate.swift */; };
 		EC15801B25B7501C0000B4A6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15801A25B7501C0000B4A6 /* SceneDelegate.swift */; };
@@ -38,6 +40,8 @@
 		06A07FE538095D57E5349C72 /* Pods-SimpleAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleAppTests.release.xcconfig"; path = "Target Support Files/Pods-SimpleAppTests/Pods-SimpleAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		2A8E88ECA98F224F18523F33 /* Pods_SimpleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		430E0DBA358264B31A37B66B /* Pods-SimpleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApp.debug.xcconfig"; path = "Target Support Files/Pods-SimpleApp/Pods-SimpleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		75E428CAD5D1FFD29AE5A8C2 /* Pods_SimpleAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD63752B1D27581E969501B1 /* Pods-SimpleApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApp.release.xcconfig"; path = "Target Support Files/Pods-SimpleApp/Pods-SimpleApp.release.xcconfig"; sourceTree = "<group>"; };
 		EB12C112F5411A4E69141D32 /* Pods-SimpleAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleAppTests.debug.xcconfig"; path = "Target Support Files/Pods-SimpleAppTests/Pods-SimpleAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,6 +135,8 @@
 				ECCB8B9125C0560E00E35968 /* Manager.swift */,
 				EC15801C25B7501C0000B4A6 /* ViewController.swift */,
 				EC15806725B754340000B4A6 /* ViewController.xib */,
+				59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */,
+				59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */,
 				EC15802125B7501F0000B4A6 /* Assets.xcassets */,
 				EC15802325B7501F0000B4A6 /* LaunchScreen.storyboard */,
 				EC15802625B7501F0000B4A6 /* Info.plist */,
@@ -244,6 +250,7 @@
 			files = (
 				EC15802525B7501F0000B4A6 /* LaunchScreen.storyboard in Resources */,
 				EC15802225B7501F0000B4A6 /* Assets.xcassets in Resources */,
+				59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */,
 				EC15806825B754340000B4A6 /* ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +338,7 @@
 				EC15801925B7501C0000B4A6 /* AppDelegate.swift in Sources */,
 				EC15807825B7568B0000B4A6 /* main.swift in Sources */,
 				EC15801B25B7501C0000B4A6 /* SceneDelegate.swift in Sources */,
+				59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */,
 				ECCB8B9225C0560E00E35968 /* Manager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
