@@ -1,10 +1,3 @@
-//
-//  FeedViewController.swift
-//  SimpleApp
-//
-//  Created by Roman Dod on 2/8/21.
-//
-
 import UIKit
 
 class FeedViewController: UIViewController {
@@ -14,9 +7,11 @@ class FeedViewController: UIViewController {
         static let paginationLoadingOffset = 3
     }
     @IBOutlet weak var table: UITableView!
-    var feedArray: [Int] = []
-    var refreshControl = UIRefreshControl()
-    var isLoading = false
+    private var feedArray: [Int] = []
+    private var refreshControl = UIRefreshControl()
+    private var isLoading = false
+    private var isEmptyServerResponse: Bool = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         table.delegate = self
@@ -28,18 +23,21 @@ class FeedViewController: UIViewController {
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         table.addSubview(refreshControl)
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        refreshControl.beginRefreshing()
+        refreshControl.sendActions(for: .valueChanged)
+    }
+
+    @objc func refresh(_ sender: AnyObject) {
         isLoading = true
         Manager.shared.loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
-            self?.isLoading = false
             self?.feedArray = result
             self?.table.reloadData()
+            self?.isLoading = false
+            self?.refreshControl.endRefreshing()
         }
-    }
-    @objc func refresh(_ sender: AnyObject) {
-        table.reloadData()
-        refreshControl.endRefreshing()
     }
 }
 
@@ -61,15 +59,17 @@ extension FeedViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let indexToLoad = feedArray.count - Constants.paginationLoadingOffset
-        if indexPath.row == indexToLoad && isLoading == false {
+        if indexPath.row == indexToLoad && isLoading == false && isEmptyServerResponse == false {
             print(indexPath.row)
             isLoading = true
             Manager.shared.loadItems(offset: feedArray.count, limit: Constants.batchSize) { [weak self] result in
-                self?.isLoading = false
+                self?.isEmptyServerResponse = result.isEmpty
                 self?.feedArray.append(contentsOf: result)
                 self?.table.reloadData()
+                self?.isLoading = false
             }
         }
     }
