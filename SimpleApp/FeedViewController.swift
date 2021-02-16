@@ -32,12 +32,18 @@ class FeedViewController: UIViewController {
 
     @objc func refresh(_ sender: AnyObject) {
         isLoading = true
-        Manager.shared.loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
-            self?.feedArray = result
-            self?.table.reloadData()
-            self?.isLoading = false
-            self?.refreshControl.endRefreshing()
-        }
+        Manager.shared
+            .loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
+                self?.isLoading = false
+                self?.refreshControl.endRefreshing()
+                switch result {
+                case .success(let feed):
+                    self?.feedArray = feed
+                    self?.table.reloadData()
+                case .failure(let error):
+                    print(error)
+                }
+            }
     }
 }
 
@@ -65,12 +71,18 @@ extension FeedViewController: UITableViewDelegate {
         if indexPath.row == indexToLoad && isLoading == false && isEmptyServerResponse == false {
             print(indexPath.row)
             isLoading = true
-            Manager.shared.loadItems(offset: feedArray.count, limit: Constants.batchSize) { [weak self] result in
-                self?.isEmptyServerResponse = result.isEmpty
-                self?.feedArray.append(contentsOf: result)
-                self?.table.reloadData()
-                self?.isLoading = false
-            }
+            Manager.shared
+                .loadItems(offset: feedArray.count, limit: Constants.batchSize) { [weak self] result in
+                    self?.isLoading = false
+                    switch result {
+                    case .success(let feed):
+                        self?.isEmptyServerResponse = feed.isEmpty
+                        self?.feedArray.append(contentsOf: feed)
+                        self?.table.reloadData()
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
         }
     }
 }
