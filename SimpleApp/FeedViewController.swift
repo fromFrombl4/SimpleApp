@@ -5,23 +5,34 @@ class FeedViewController: UIViewController {
         static let cellReuseIdentifier = "cellReuseIdentifier"
         static let batchSize = 20
         static let paginationLoadingOffset = 3
+        static let cellHeight: CGFloat = 100
     }
-    @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var collection: UICollectionView!
     private var feedArray: [Int] = []
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
     private var isEmptyServerResponse: Bool = false
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        table.delegate = self
-        table.dataSource = self
-        table.register(UITableViewCell.self, forCellReuseIdentifier: Constants.cellReuseIdentifier)
-        table.tableFooterView = UIView()
-
+    private func setupCollection() {
+        collection.delegate = self
+        collection.dataSource = self
+        collection.register(
+            UINib(
+                nibName: String.init(describing: FeedCollectionViewCell.self
+                ), bundle: nil
+            ), forCellWithReuseIdentifier: Constants.cellReuseIdentifier
+        )
+        let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
+        collectionLayout?.itemSize = CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
+        collectionLayout?.minimumLineSpacing = 0
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        table.addSubview(refreshControl)
+        collection.addSubview(refreshControl)
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollection()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +50,7 @@ class FeedViewController: UIViewController {
                 switch result {
                 case .success(let feed):
                     self?.feedArray = feed
-                    self?.table.reloadData()
+                    self?.collection.reloadData()
                 case .failure(let error):
                     print(error)
                 }
@@ -47,28 +58,39 @@ class FeedViewController: UIViewController {
     }
 }
 
-extension FeedViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension FeedViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         feedArray.count
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = table.dequeueReusableCell(withIdentifier: Constants.cellReuseIdentifier) else {
-            return UITableViewCell()
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collection.dequeueReusableCell(
+            withReuseIdentifier: Constants.cellReuseIdentifier,
+            for: indexPath
+        ) as? FeedCollectionViewCell else {
+            return UICollectionViewCell()
         }
-        cell.textLabel?.text = "\(feedArray[indexPath.row])"
+        cell.label.text = "\(feedArray[indexPath.row])"
         return cell
     }
 }
 
-extension FeedViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+extension FeedViewController: UICollectionViewDelegate {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
         let indexToLoad = feedArray.count - Constants.paginationLoadingOffset
-        if indexPath.row == indexToLoad && isLoading == false && isEmptyServerResponse == false {
+        if indexPath.row == indexToLoad
+            && isLoading == false
+            && isEmptyServerResponse == false {
             print(indexPath.row)
             isLoading = true
             Manager.shared
@@ -78,11 +100,14 @@ extension FeedViewController: UITableViewDelegate {
                     case .success(let feed):
                         self?.isEmptyServerResponse = feed.isEmpty
                         self?.feedArray.append(contentsOf: feed)
-                        self?.table.reloadData()
+                        self?.collection.reloadData()
                     case .failure(let error):
                         print(error)
                     }
                 }
+        } else if  isEmptyServerResponse == true {
+            let controller = PlaceholderViewController()
+            self.present(controller, animated: true, completion: nil)
         }
     }
 }
