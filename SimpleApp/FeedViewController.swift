@@ -4,6 +4,7 @@ class FeedViewController: UIViewController {
     private enum Constants {
         static let cellReuseIdentifier = "cellReuseIdentifier"
         static let loadingCellIdentifier = "loadingCellIdentifier"
+        static let retryCellIdentifier = "retryCellIdentifier"
         static let batchSize = 20
         static let paginationLoadingOffset = 1
         static let cellHeight: CGFloat = 100
@@ -12,11 +13,11 @@ class FeedViewController: UIViewController {
     private var feedArray: [Int] = []
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
-    private var isEmptyServerResponse: Bool = false
-    private var isFirstLoading: Bool = true
-    private var isLoadingCell = LoadingIndicatorCollectionViewCell()
-    private var placeHolderController = PlaceholderViewController.init()
-    
+    private var isFirstLoading = true
+    private var isEmptyServerResponse = false
+    private var isFailedOnPagination = false
+    private var paginationRetryAction: (() -> Void)?
+    private var placeHolderController = PlaceholderViewController()
     weak var delegate: PlaceholderViewControllerDelegate?
 
     private func setupCollection() {
@@ -35,6 +36,12 @@ class FeedViewController: UIViewController {
                 ), bundle: nil
             ), forCellWithReuseIdentifier: Constants.loadingCellIdentifier
         )
+        collection.register(
+            UINib(
+                nibName: String.init(describing: RetyCollectionViewCell.self
+                ), bundle: nil
+            ), forCellWithReuseIdentifier: Constants.retryCellIdentifier
+        )
         let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
         collectionLayout?.itemSize = CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
         collectionLayout?.minimumLineSpacing = 0
@@ -43,26 +50,10 @@ class FeedViewController: UIViewController {
         collection.addSubview(refreshControl)
     }
 
-    private func setupPlaceHolder() {
-        view.addSubview(placeHolderController.view)
-        NSLayoutConstraint.activate([
-            placeHolderController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            placeHolderController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            placeHolderController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
-            placeHolderController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ])
-        placeHolderController.view.isHidden = true
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollection()
         setupPlaceHolder()
-    }
-
-    private func refreshData() {
-        refreshControl.beginRefreshing()
-        refreshControl.sendActions(for: .valueChanged)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -71,6 +62,7 @@ class FeedViewController: UIViewController {
     }
 
     @objc func refresh(_ sender: AnyObject) {
+        print(#function)
         isLoading = true
         Manager.shared
             .loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
@@ -84,6 +76,42 @@ class FeedViewController: UIViewController {
                     self?.collection.reloadData()
                 case .failure:
                     self?.placeHolderController.view.isHidden = false
+                    self?.collection.reloadData()
+                }
+            }
+    }
+
+    private func setupPlaceHolder() {
+        view.addSubview(placeHolderController.view)
+        NSLayoutConstraint.activate([
+            placeHolderController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            placeHolderController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            placeHolderController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+            placeHolderController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
+        placeHolderController.view.isHidden = true
+    }
+
+    private func refreshData() {
+        refreshControl.beginRefreshing()
+        refreshControl.sendActions(for: .valueChanged)
+    }
+
+    private func paginationLoading(offset: Int, limit: Int = Constants.batchSize) {
+        isLoading = true
+        Manager.shared
+            .loadItems(offset: offset, limit: limit) { [weak self] result in
+                self?.isLoading = false
+                switch result {
+                case .success(let feed):
+                    self?.isEmptyServerResponse = feed.isEmpty
+                    self?.feedArray.append(contentsOf: feed)
+                    self?.collection.reloadData()
+                    self?.isFailedOnPagination = false
+                case .failure:
+                    self?.isFailedOnPagination = true
+                    print("error")
+                    self?.collection.reloadData()
                 }
             }
     }
@@ -106,13 +134,32 @@ extension FeedViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         if indexPath.row == feedArray.count {
-            guard let cell = collection.dequeueReusableCell(
-                withReuseIdentifier: Constants.loadingCellIdentifier,
-                for: indexPath
-            ) as? LoadingIndicatorCollectionViewCell else {
-                return UICollectionViewCell()
+            if isFailedOnPagination {
+                guard let cell = collection.dequeueReusableCell(
+                    withReuseIdentifier: Constants.retryCellIdentifier,
+                    for: indexPath
+                ) as? RetyCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                cell.retryAction = nil
+                cell.retryAction = { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    self.isFailedOnPagination = false
+                    self.collection.reloadData()
+                    self.paginationLoading(offset: self.feedArray.count)
+                }
+                return cell
+            } else {
+                guard let cell = collection.dequeueReusableCell(
+                    withReuseIdentifier: Constants.loadingCellIdentifier,
+                    for: indexPath
+                ) as? LoadingIndicatorCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                return cell
             }
-            return cell
         } else {
             guard let cell = collection.dequeueReusableCell(
                 withReuseIdentifier: Constants.cellReuseIdentifier,
@@ -135,30 +182,17 @@ extension FeedViewController: UICollectionViewDelegate {
         let indexToLoad = feedArray.count - Constants.paginationLoadingOffset
         if indexPath.row == indexToLoad
             && isLoading == false
-            && isEmptyServerResponse == false {
+            && isEmptyServerResponse == false
+            && isFailedOnPagination == false {
             print(indexPath.row)
-            isLoading = true
-            Manager.shared
-                .loadItems(offset: feedArray.count, limit: Constants.batchSize) { [weak self] result in
-                    self?.isLoading = false
-                    switch result {
-                    case .success(let feed):
-                        self?.isEmptyServerResponse = feed.isEmpty
-                        self?.feedArray.append(contentsOf: feed)
-                        self?.collection.reloadData()
-                    case .failure:
-                        if self?.isFirstLoading == false && self?.isEmptyServerResponse == true {
-
-                        }
-                    }
-                }
+            paginationLoading(offset: feedArray.count)
         }
     }
 }
 
 extension FeedViewController: PlaceholderViewControllerDelegate {
     func buttonPressed() {
-        self.placeHolderController.view.isHidden = true
-        self.refreshData()
+        placeHolderController.view.isHidden = true
+        refreshData()
     }
 }

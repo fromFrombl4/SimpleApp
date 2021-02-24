@@ -29,6 +29,9 @@
                 <constraint firstItem="sQ8-tz-MBA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Q9r-09-rEJ"/>
                 <constraint firstAttribute="trailing" secondItem="sQ8-tz-MBA" secondAttribute="trailing" constant="5" id="jMq-hx-5kh"/>
             </constraints>
+            <connections>
+                <outlet property="indicator" destination="sQ8-tz-MBA" id="LjM-0a-B7K"/>
+            </connections>
             <point key="canvasLocation" x="86" y="50"/>
         </collectionViewCell>
     </objects>
