@@ -16,14 +16,11 @@ class FeedViewController: UIViewController {
     private var isFirstLoading: Bool = true
     private var isLoadingCell = LoadingIndicatorCollectionViewCell()
     private var placeHolderController = PlaceholderViewController.init()
-    private var loadingFailedAlert = UIAlertController(
-        title: "Oops! Something went wrong",
-        message: "Please press the button and try again!",
-        preferredStyle: .alert
-    )
+    
     weak var delegate: PlaceholderViewControllerDelegate?
 
     private func setupCollection() {
+        placeHolderController.delegate = self
         collection.delegate = self
         collection.dataSource = self
         collection.register(
@@ -57,23 +54,20 @@ class FeedViewController: UIViewController {
         placeHolderController.view.isHidden = true
     }
 
-    private func setupAlert() {
-        loadingFailedAlert.addAction(UIAlertAction(title: "Try Again", style: .default) {_ in
-            self.loadingFailedAlert.view.removeFromSuperview()
-        })
-        self.present(loadingFailedAlert, animated: true, completion: nil)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollection()
         setupPlaceHolder()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    private func refreshData() {
         refreshControl.beginRefreshing()
         refreshControl.sendActions(for: .valueChanged)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshData()
     }
 
     @objc func refresh(_ sender: AnyObject) {
@@ -90,10 +84,6 @@ class FeedViewController: UIViewController {
                     self?.collection.reloadData()
                 case .failure:
                     self?.placeHolderController.view.isHidden = false
-
-                    if self?.isFirstLoading == false && self?.isEmptyServerResponse == true {
-                        self?.setupAlert()
-                    }
                 }
             }
     }
@@ -156,8 +146,10 @@ extension FeedViewController: UICollectionViewDelegate {
                         self?.isEmptyServerResponse = feed.isEmpty
                         self?.feedArray.append(contentsOf: feed)
                         self?.collection.reloadData()
-                    case .failure(let error):
-                        print(error)
+                    case .failure:
+                        if self?.isFirstLoading == false && self?.isEmptyServerResponse == true {
+
+                        }
                     }
                 }
         }
@@ -166,7 +158,7 @@ extension FeedViewController: UICollectionViewDelegate {
 
 extension FeedViewController: PlaceholderViewControllerDelegate {
     func buttonPressed() {
-        self.placeHolderController.view.removeFromSuperview()
-        self.setupCollection()
+        self.placeHolderController.view.isHidden = true
+        self.refreshData()
     }
 }

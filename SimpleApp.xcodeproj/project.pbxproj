@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		135F79D3DA355E5DB06173CC /* Pods_SimpleAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E428CAD5D1FFD29AE5A8C2 /* Pods_SimpleAppTests.framework */; };
+		596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */; };
+		596970B825E6C37E00AE5310 /* RetyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */; };
 		59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */; };
 		59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */; };
 		59F79F6D25DD8A1A00868CF1 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */; };
@@ -46,6 +48,8 @@
 		06A07FE538095D57E5349C72 /* Pods-SimpleAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleAppTests.release.xcconfig"; path = "Target Support Files/Pods-SimpleAppTests/Pods-SimpleAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		2A8E88ECA98F224F18523F33 /* Pods_SimpleApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		430E0DBA358264B31A37B66B /* Pods-SimpleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApp.debug.xcconfig"; path = "Target Support Files/Pods-SimpleApp/Pods-SimpleApp.debug.xcconfig"; sourceTree = "<group>"; };
+		596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetyCollectionViewCell.swift; sourceTree = "<group>"; };
+		596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetyCollectionViewCell.xib; sourceTree = "<group>"; };
 		59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -155,6 +159,8 @@
 				ECCB8B9125C0560E00E35968 /* Manager.swift */,
 				59F79F7B25DDDA1F00868CF1 /* PlaceholderViewController.swift */,
 				59F79F7C25DDDA1F00868CF1 /* PlaceholderViewController.xib */,
+				596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */,
+				596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */,
 				EC15801A25B7501C0000B4A6 /* SceneDelegate.swift */,
 				EC15801C25B7501C0000B4A6 /* ViewController.swift */,
 				EC15806725B754340000B4A6 /* ViewController.xib */,
@@ -272,6 +278,7 @@
 				59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */,
 				59F79F6E25DD8A1A00868CF1 /* FeedCollectionViewCell.xib in Resources */,
 				EC15806825B754340000B4A6 /* ViewController.xib in Resources */,
+				596970B825E6C37E00AE5310 /* RetyCollectionViewCell.xib in Resources */,
 				59F79F7625DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +364,7 @@
 			files = (
 				EC15801D25B7501C0000B4A6 /* ViewController.swift in Sources */,
 				59F79F7D25DDDA1F00868CF1 /* PlaceholderViewController.swift in Sources */,
+				596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */,
 				EC15801925B7501C0000B4A6 /* AppDelegate.swift in Sources */,
 				EC15807825B7568B0000B4A6 /* main.swift in Sources */,
 				EC15801B25B7501C0000B4A6 /* SceneDelegate.swift in Sources */,
