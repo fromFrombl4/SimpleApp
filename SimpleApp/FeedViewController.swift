@@ -3,8 +3,9 @@ import UIKit
 class FeedViewController: UIViewController {
     private enum Constants {
         static let cellReuseIdentifier = "cellReuseIdentifier"
+        static let loadingCellIdentifier = "loadingCellIdentifier"
         static let batchSize = 20
-        static let paginationLoadingOffset = 3
+        static let paginationLoadingOffset = 1
         static let cellHeight: CGFloat = 100
     }
     @IBOutlet weak var collection: UICollectionView!
@@ -12,6 +13,15 @@ class FeedViewController: UIViewController {
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
     private var isEmptyServerResponse: Bool = false
+    private var isFirstLoading: Bool = true
+    private var isLoadingCell = LoadingIndicatorCollectionViewCell()
+    private var placeHolderController = PlaceholderViewController.init()
+    private var loadingFailedAlert = UIAlertController(
+        title: "Oops! Something went wrong",
+        message: "Please press the button and try again!",
+        preferredStyle: .alert
+    )
+    weak var delegate: PlaceholderViewControllerDelegate?
 
     private func setupCollection() {
         collection.delegate = self
@@ -22,6 +32,12 @@ class FeedViewController: UIViewController {
                 ), bundle: nil
             ), forCellWithReuseIdentifier: Constants.cellReuseIdentifier
         )
+        collection.register(
+            UINib(
+                nibName: String.init(describing: LoadingIndicatorCollectionViewCell.self
+                ), bundle: nil
+            ), forCellWithReuseIdentifier: Constants.loadingCellIdentifier
+        )
         let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
         collectionLayout?.itemSize = CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
         collectionLayout?.minimumLineSpacing = 0
@@ -30,9 +46,28 @@ class FeedViewController: UIViewController {
         collection.addSubview(refreshControl)
     }
 
+    private func setupPlaceHolder() {
+        view.addSubview(placeHolderController.view)
+        NSLayoutConstraint.activate([
+            placeHolderController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            placeHolderController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            placeHolderController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
+            placeHolderController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
+        placeHolderController.view.isHidden = true
+    }
+
+    private func setupAlert() {
+        loadingFailedAlert.addAction(UIAlertAction(title: "Try Again", style: .default) {_ in
+            self.loadingFailedAlert.view.removeFromSuperview()
+        })
+        self.present(loadingFailedAlert, animated: true, completion: nil)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCollection()
+        setupPlaceHolder()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -49,10 +84,16 @@ class FeedViewController: UIViewController {
                 self?.refreshControl.endRefreshing()
                 switch result {
                 case .success(let feed):
+                    self?.isFirstLoading = false
                     self?.feedArray = feed
+                    self?.isEmptyServerResponse = false
                     self?.collection.reloadData()
-                case .failure(let error):
-                    print(error)
+                case .failure:
+                    self?.placeHolderController.view.isHidden = false
+
+                    if self?.isFirstLoading == false && self?.isEmptyServerResponse == true {
+                        self?.setupAlert()
+                    }
                 }
             }
     }
@@ -63,21 +104,35 @@ extension FeedViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        feedArray.count
+        if isEmptyServerResponse || isFirstLoading {
+            return feedArray.count
+        } else {
+            return feedArray.count + 1
+        }
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let cell = collection.dequeueReusableCell(
-            withReuseIdentifier: Constants.cellReuseIdentifier,
-            for: indexPath
-        ) as? FeedCollectionViewCell else {
-            return UICollectionViewCell()
+        if indexPath.row == feedArray.count {
+            guard let cell = collection.dequeueReusableCell(
+                withReuseIdentifier: Constants.loadingCellIdentifier,
+                for: indexPath
+            ) as? LoadingIndicatorCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            return cell
+        } else {
+            guard let cell = collection.dequeueReusableCell(
+                withReuseIdentifier: Constants.cellReuseIdentifier,
+                for: indexPath
+            ) as? FeedCollectionViewCell else {
+                return UICollectionViewCell()
+            }
+            cell.label.text = "\(feedArray[indexPath.row])"
+            return cell
         }
-        cell.label.text = "\(feedArray[indexPath.row])"
-        return cell
     }
 }
 
@@ -105,9 +160,13 @@ extension FeedViewController: UICollectionViewDelegate {
                         print(error)
                     }
                 }
-        } else if  isEmptyServerResponse == true {
-            let controller = PlaceholderViewController()
-            self.present(controller, animated: true, completion: nil)
         }
+    }
+}
+
+extension FeedViewController: PlaceholderViewControllerDelegate {
+    func buttonPressed() {
+        self.placeHolderController.view.removeFromSuperview()
+        self.setupCollection()
     }
 }

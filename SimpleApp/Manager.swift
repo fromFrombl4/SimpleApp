@@ -15,7 +15,7 @@ class Manager {
     private var array: [Int]
 
     /// for testing purpose range in 0...1
-    internal var failureChance = 0.2
+    internal var failureChance = 0.8
 
     func loadItems(
         offset: Int,

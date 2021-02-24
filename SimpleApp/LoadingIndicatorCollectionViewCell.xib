@@ -17,7 +17,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="sQ8-tz-MBA">
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="sQ8-tz-MBA">
                         <rect key="frame" x="5" y="5" width="40" height="40"/>
                     </activityIndicatorView>
                 </subviews>
@@ -29,9 +29,6 @@
                 <constraint firstItem="sQ8-tz-MBA" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="Q9r-09-rEJ"/>
                 <constraint firstAttribute="trailing" secondItem="sQ8-tz-MBA" secondAttribute="trailing" constant="5" id="jMq-hx-5kh"/>
             </constraints>
-            <connections>
-                <outlet property="loadingIndicator" destination="sQ8-tz-MBA" id="uf1-hE-E5e"/>
-            </connections>
             <point key="canvasLocation" x="86" y="50"/>
         </collectionViewCell>
     </objects>
