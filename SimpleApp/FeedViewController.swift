@@ -7,10 +7,10 @@ class FeedViewController: UIViewController {
         static let retryCellIdentifier = "retryCellIdentifier"
         static let batchSize = 20
         static let paginationLoadingOffset = 1
-        static let cellHeight: CGFloat = 100
+        static let cellHeight: CGFloat = 200
     }
     @IBOutlet weak var collection: UICollectionView!
-    private var feedArray: [Int] = []
+    private var feedArray: [Post] = []
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
     private var isFirstLoading = true
@@ -41,7 +41,6 @@ class FeedViewController: UIViewController {
             ), forCellWithReuseIdentifier: Constants.retryCellIdentifier
         )
         let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
-        collectionLayout?.itemSize = CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
         collectionLayout?.minimumLineSpacing = 0
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
@@ -98,8 +97,8 @@ class FeedViewController: UIViewController {
     }
 
     private func refreshData() {
-        refreshControl.sendActions(for: .valueChanged)
         refreshControl.beginRefreshing()
+        refreshControl.sendActions(for: .valueChanged)
     }
 
     private func paginationLoading(offset: Int, limit: Int = Constants.batchSize) {
@@ -175,7 +174,7 @@ extension FeedViewController: UICollectionViewDataSource {
             ) as? FeedCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.label.text = "\(feedArray[indexPath.row])"
+            cell.post = feedArray[indexPath.row]
             return cell
         }
     }
@@ -194,6 +193,31 @@ extension FeedViewController: UICollectionViewDelegate {
             && isFailedOnPagination == false {
             print(indexPath.row)
             paginationLoading(offset: feedArray.count)
+        }
+    }
+}
+
+extension FeedViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        if indexPath.row == feedArray.count {
+            return CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
+        } else {
+            let constraintRect = CGSize(width: UIScreen.main.bounds.width - 32, height: .greatestFiniteMagnitude)
+
+            let result = feedArray[indexPath.row].body
+                .boundingRect(
+                    with: constraintRect,
+                    options: [],
+                    attributes: [.font: UIFont.systemFont(ofSize: 17)],
+                    context: nil
+                )
+            print(feedArray[indexPath.row].body)
+            print(result.size)
+            return result.size
         }
     }
 }
