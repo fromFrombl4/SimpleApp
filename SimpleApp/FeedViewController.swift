@@ -17,11 +17,9 @@ class FeedViewController: UIViewController {
     private var isEmptyServerResponse = false
     private var isFailedOnPagination = false
     private var paginationRetryAction: (() -> Void)?
-    private var placeHolderController = PlaceholderViewController()
-    weak var delegate: PlaceholderViewControllerDelegate?
+    private var placeholder = PlaceholderView()
 
     private func setupCollection() {
-        placeHolderController.delegate = self
         collection.delegate = self
         collection.dataSource = self
         collection.register(
@@ -48,6 +46,7 @@ class FeedViewController: UIViewController {
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
         collection.addSubview(refreshControl)
+        collection.showsHorizontalScrollIndicator = false
     }
 
     override func viewDidLoad() {
@@ -62,8 +61,12 @@ class FeedViewController: UIViewController {
     }
 
     @objc func refresh(_ sender: AnyObject) {
-        print(#function)
+        guard isLoading == false else {
+            refreshControl.endRefreshing()
+            return
+        }
         isLoading = true
+        print(#function)
         Manager.shared
             .loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
                 self?.isLoading = false
@@ -75,29 +78,34 @@ class FeedViewController: UIViewController {
                     self?.isEmptyServerResponse = false
                     self?.collection.reloadData()
                 case .failure:
-                    self?.placeHolderController.view.isHidden = false
+                    self?.feedArray = []
+                    self?.placeholder.isHidden = false
                     self?.collection.reloadData()
                 }
             }
     }
 
     private func setupPlaceHolder() {
-        view.addSubview(placeHolderController.view)
+        view.addSubview(placeholder)
         NSLayoutConstraint.activate([
-            placeHolderController.view.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            placeHolderController.view.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            placeHolderController.view.topAnchor.constraint(equalTo: self.view.topAnchor),
-            placeHolderController.view.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            placeholder.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            placeholder.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            placeholder.topAnchor.constraint(equalTo: view.topAnchor),
+            placeholder.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        placeHolderController.view.isHidden = true
+        placeholder.delegate = self
+        placeholder.isHidden = true
     }
 
     private func refreshData() {
-        refreshControl.beginRefreshing()
         refreshControl.sendActions(for: .valueChanged)
+        refreshControl.beginRefreshing()
     }
 
     private func paginationLoading(offset: Int, limit: Int = Constants.batchSize) {
+        guard isLoading == false else {
+            return
+        }
         isLoading = true
         Manager.shared
             .loadItems(offset: offset, limit: limit) { [weak self] result in
@@ -190,9 +198,9 @@ extension FeedViewController: UICollectionViewDelegate {
     }
 }
 
-extension FeedViewController: PlaceholderViewControllerDelegate {
-    func buttonPressed() {
-        placeHolderController.view.isHidden = true
+extension FeedViewController: PlaceholderViewDelegate {
+    func placeholderViewButtonPressed() {
+        placeholder.isHidden = true
         refreshData()
     }
 }
