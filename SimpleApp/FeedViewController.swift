@@ -24,21 +24,21 @@ class FeedViewController: UIViewController {
         collection.dataSource = self
         collection.register(
             UINib(
-                nibName: String.init(describing: FeedCollectionViewCell.self
-                ), bundle: nil
-            ), forCellWithReuseIdentifier: Constants.cellReuseIdentifier
+                nibName: String.init(describing: FeedCollectionViewCell.self),
+                bundle: nil),
+            forCellWithReuseIdentifier: Constants.cellReuseIdentifier
         )
         collection.register(
             UINib(
-                nibName: String.init(describing: LoadingIndicatorCollectionViewCell.self
-                ), bundle: nil
-            ), forCellWithReuseIdentifier: Constants.loadingCellIdentifier
+                nibName: String.init(describing: LoadingIndicatorCollectionViewCell.self),
+                bundle: nil),
+            forCellWithReuseIdentifier: Constants.loadingCellIdentifier
         )
         collection.register(
             UINib(
-                nibName: String.init(describing: RetyCollectionViewCell.self
-                ), bundle: nil
-            ), forCellWithReuseIdentifier: Constants.retryCellIdentifier
+                nibName: String.init(describing: RetyCollectionViewCell.self),
+                bundle: nil),
+            forCellWithReuseIdentifier: Constants.retryCellIdentifier
         )
         let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
         collectionLayout?.minimumLineSpacing = 0
@@ -206,18 +206,7 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout {
         if indexPath.row == feedArray.count {
             return CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
         } else {
-            let constraintRect = CGSize(width: UIScreen.main.bounds.width - 32, height: .greatestFiniteMagnitude)
-
-            let result = feedArray[indexPath.row].body
-                .boundingRect(
-                    with: constraintRect,
-                    options: [],
-                    attributes: [.font: UIFont.systemFont(ofSize: 17)],
-                    context: nil
-                )
-            print(feedArray[indexPath.row].body)
-            print(result.size)
-            return result.size
+            return FeedCollectionViewCell.cellSize(for: feedArray[indexPath.row].body)
         }
     }
 }

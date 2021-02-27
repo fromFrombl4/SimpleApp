@@ -620,17 +620,31 @@ enum ManagerError: Error {
 class Manager {
     static let shared = Manager()
     private init() {
-        if let data = json.data(using: .utf8),
-           let posts = try? JSONDecoder().decode([Post].self, from: data) {
-            array = posts
-        } else {
-            array = []
-        }
+        array = loadPostsFromJSON()
     }
-    private var array: [Post]
+
+    private var array: [Post] = []
 
     /// for testing purpose range in 0...1
     internal var failureChance = 0.2
+
+    /// for testing purpose
+    internal func updateDataSource(using posts: [Post]) {
+        array = posts
+    }
+
+    internal func resetDataSource() {
+        array = loadPostsFromJSON()
+    }
+
+    private func loadPostsFromJSON() -> [Post] {
+        if let data = json.data(using: .utf8),
+           let posts = try? JSONDecoder().decode([Post].self, from: data) {
+            return posts
+        } else {
+            return []
+        }
+    }
 
     func loadItems(
         offset: Int,

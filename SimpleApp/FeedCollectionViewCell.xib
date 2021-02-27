@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -28,13 +27,15 @@
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TVL-sd-vgR">
                         <rect key="frame" x="16" y="56" width="426" height="20.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20.5" id="ngu-aw-FCs"/>
+                        </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
                 <constraint firstItem="0ZE-qq-fVt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="BMu-wW-Vcx"/>
                 <constraint firstItem="TVL-sd-vgR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="16" id="LvO-0z-ndP"/>
@@ -46,7 +47,14 @@
             <size key="customSize" width="458" height="247"/>
             <connections>
                 <outlet property="body" destination="TVL-sd-vgR" id="VJv-M1-o06"/>
+                <outlet property="bodyHeight" destination="ngu-aw-FCs" id="MVf-MI-suQ"/>
+                <outlet property="bodyLeading" destination="LvO-0z-ndP" id="wqa-qq-0V2"/>
+                <outlet property="bodyTop" destination="dE7-C2-azM" id="DRd-7P-Q23"/>
+                <outlet property="bodyTrailing" destination="daj-lL-41a" id="Dfb-pL-JGg"/>
                 <outlet property="title" destination="0ZE-qq-fVt" id="u9O-sc-rsn"/>
+                <outlet property="titleHeight" destination="QQU-fB-mk7" id="W8y-Ir-FaW"/>
+                <outlet property="titleLeading" destination="Tsw-LY-jqf" id="csm-p2-yqo"/>
+                <outlet property="titleTrailing" destination="RUr-j3-es8" id="Bgl-Hl-AA3"/>
             </connections>
             <point key="canvasLocation" x="-157.97101449275362" y="157.70089285714286"/>
         </collectionViewCell>
