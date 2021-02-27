@@ -31,6 +31,7 @@
 		EC15808F25B75AEE0000B4A6 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */; };
 		ECCB8B9225C0560E00E35968 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB8B9125C0560E00E35968 /* Manager.swift */; };
 		ECCB8B9625C0565700E35968 /* ManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB8B9525C0565700E35968 /* ManagerTests.swift */; };
+		ECF2B3AB25EA253F00EBB452 /* AppMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2B3AA25EA253F00EBB452 /* AppMocks.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		ECCB8B9125C0560E00E35968 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		ECCB8B9525C0565700E35968 /* ManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerTests.swift; sourceTree = "<group>"; };
+		ECF2B3AA25EA253F00EBB452 /* AppMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMocks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				EC15803125B7501F0000B4A6 /* Info.plist */,
 				EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */,
 				ECCB8B9525C0565700E35968 /* ManagerTests.swift */,
+				ECF2B3AA25EA253F00EBB452 /* AppMocks.swift */,
 			);
 			path = SimpleAppTests;
 			sourceTree = "<group>";
@@ -380,6 +383,7 @@
 				EC15807225B756320000B4A6 /* TestAppDelegate.swift in Sources */,
 				EC15808F25B75AEE0000B4A6 /* ViewControllerTests.swift in Sources */,
 				EC15808425B7591C0000B4A6 /* TestingViewController.swift in Sources */,
+				ECF2B3AB25EA253F00EBB452 /* AppMocks.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
