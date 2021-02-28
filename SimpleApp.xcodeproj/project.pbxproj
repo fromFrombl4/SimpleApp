@@ -10,6 +10,8 @@
 		135F79D3DA355E5DB06173CC /* Pods_SimpleAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E428CAD5D1FFD29AE5A8C2 /* Pods_SimpleAppTests.framework */; };
 		596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */; };
 		596970B825E6C37E00AE5310 /* RetyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */; };
+		596970F525EC59AA00AE5310 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596970F325EC59AA00AE5310 /* GalleryViewController.swift */; };
+		596970F625EC59AA00AE5310 /* GalleryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596970F425EC59AA00AE5310 /* GalleryViewController.xib */; };
 		59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */; };
 		59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */; };
 		59F79F6D25DD8A1A00868CF1 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */; };
@@ -49,6 +51,8 @@
 		430E0DBA358264B31A37B66B /* Pods-SimpleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApp.debug.xcconfig"; path = "Target Support Files/Pods-SimpleApp/Pods-SimpleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetyCollectionViewCell.swift; sourceTree = "<group>"; };
 		596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetyCollectionViewCell.xib; sourceTree = "<group>"; };
+		596970F325EC59AA00AE5310 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		596970F425EC59AA00AE5310 /* GalleryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryViewController.xib; sourceTree = "<group>"; };
 		59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -149,6 +153,8 @@
 				59F79F6C25DD8A1A00868CF1 /* FeedCollectionViewCell.xib */,
 				59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */,
 				59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */,
+				596970F325EC59AA00AE5310 /* GalleryViewController.swift */,
+				596970F425EC59AA00AE5310 /* GalleryViewController.xib */,
 				EC15802625B7501F0000B4A6 /* Info.plist */,
 				EC15802325B7501F0000B4A6 /* LaunchScreen.storyboard */,
 				59F79F7325DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.swift */,
@@ -270,6 +276,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC15802525B7501F0000B4A6 /* LaunchScreen.storyboard in Resources */,
+				596970F625EC59AA00AE5310 /* GalleryViewController.xib in Resources */,
 				EC15802225B7501F0000B4A6 /* Assets.xcassets in Resources */,
 				59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */,
 				59F79F6E25DD8A1A00868CF1 /* FeedCollectionViewCell.xib in Resources */,
@@ -358,6 +365,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				596970F525EC59AA00AE5310 /* GalleryViewController.swift in Sources */,
 				EC15801D25B7501C0000B4A6 /* ViewController.swift in Sources */,
 				59F79F7D25DDDA1F00868CF1 /* PlaceholderView.swift in Sources */,
 				596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */,

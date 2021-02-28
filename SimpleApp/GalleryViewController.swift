@@ -1,6 +1,6 @@
 import UIKit
 
-class FeedViewController: UIViewController {
+class GalleryViewController: UIViewController {
     private enum Constants {
         static let cellReuseIdentifier = "cellReuseIdentifier"
         static let loadingCellIdentifier = "loadingCellIdentifier"
@@ -18,6 +18,7 @@ class FeedViewController: UIViewController {
     private var isFailedOnPagination = false
     private var paginationRetryAction: (() -> Void)?
     private var placeholder = PlaceholderView()
+
 
     private func setupCollection() {
         collection.delegate = self
@@ -52,7 +53,7 @@ class FeedViewController: UIViewController {
         super.viewDidLoad()
         setupCollection()
         setupPlaceHolder()
-        title = "Feed"
+        title = "Gallery"
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -125,7 +126,7 @@ class FeedViewController: UIViewController {
     }
 }
 
-extension FeedViewController: UICollectionViewDataSource {
+extension GalleryViewController: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
@@ -181,7 +182,7 @@ extension FeedViewController: UICollectionViewDataSource {
     }
 }
 
-extension FeedViewController: UICollectionViewDelegate {
+extension GalleryViewController: UICollectionViewDelegate {
     func collectionView(
         _ collectionView: UICollectionView,
         willDisplay cell: UICollectionViewCell,
@@ -198,16 +199,16 @@ extension FeedViewController: UICollectionViewDelegate {
     }
 }
 
-extension FeedViewController: UICollectionViewDelegateFlowLayout {
+extension GalleryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         if indexPath.row == feedArray.count {
-            return CGSize(width: UIScreen.main.bounds.width, height: Constants.cellHeight)
+            return CGSize(width: UIScreen.main.bounds.width / 2, height: Constants.cellHeight)
         } else {
-            let constraintRect = CGSize(width: UIScreen.main.bounds.width - 32, height: .greatestFiniteMagnitude)
+            let constraintRect = CGSize(width: UIScreen.main.bounds.width / 2 - 32, height: .greatestFiniteMagnitude)
 
             let result = feedArray[indexPath.row].body
                 .boundingRect(
@@ -223,7 +224,7 @@ extension FeedViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension FeedViewController: PlaceholderViewDelegate {
+extension GalleryViewController: PlaceholderViewDelegate {
     func placeholderViewButtonPressed() {
         placeholder.isHidden = true
         refreshData()
