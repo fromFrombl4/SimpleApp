@@ -171,6 +171,8 @@
 				59F79F6C25DD8A1A00868CF1 /* FeedCollectionViewCell.xib */,
 				59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */,
 				59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */,
+				596970F325EC59AA00AE5310 /* GalleryViewController.swift */,
+				596970F425EC59AA00AE5310 /* GalleryViewController.xib */,
 				EC15802625B7501F0000B4A6 /* Info.plist */,
 				EC15802325B7501F0000B4A6 /* LaunchScreen.storyboard */,
 				59F79F7325DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.swift */,
@@ -298,6 +300,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC15802525B7501F0000B4A6 /* LaunchScreen.storyboard in Resources */,
+				596970F625EC59AA00AE5310 /* GalleryViewController.xib in Resources */,
 				EC15802225B7501F0000B4A6 /* Assets.xcassets in Resources */,
 				59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */,
 				59F79F6E25DD8A1A00868CF1 /* FeedCollectionViewCell.xib in Resources */,
@@ -405,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				596970F525EC59AA00AE5310 /* GalleryViewController.swift in Sources */,
 				EC15801D25B7501C0000B4A6 /* ViewController.swift in Sources */,
 				59F79F7D25DDDA1F00868CF1 /* PlaceholderView.swift in Sources */,
 				596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */,
