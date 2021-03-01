@@ -617,7 +617,7 @@ enum ManagerError: Error {
     case timeout
 }
 
-class Manager {
+class Manager: FetcherProtocol {
     static let shared = Manager()
     private init() {
         array = loadPostsFromJSON()

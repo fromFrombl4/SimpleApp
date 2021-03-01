@@ -10,6 +10,12 @@
 		135F79D3DA355E5DB06173CC /* Pods_SimpleAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75E428CAD5D1FFD29AE5A8C2 /* Pods_SimpleAppTests.framework */; };
 		596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */; };
 		596970B825E6C37E00AE5310 /* RetyCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */; };
+		596970F525EC59AA00AE5310 /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 596970F325EC59AA00AE5310 /* GalleryViewController.swift */; };
+		596970F625EC59AA00AE5310 /* GalleryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 596970F425EC59AA00AE5310 /* GalleryViewController.xib */; };
+		5969710625ED580B00AE5310 /* FetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5969710525ED580B00AE5310 /* FetcherProtocol.swift */; };
+		5969710A25ED5D6600AE5310 /* FeedViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5969710925ED5D6600AE5310 /* FeedViewControllerTests.swift */; };
+		5969711B25ED61F500AE5310 /* .sourcery.yml in Resources */ = {isa = PBXBuildFile; fileRef = 5969711A25ED61F500AE5310 /* .sourcery.yml */; };
+		5969712425ED63D400AE5310 /* AutoMockable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5969712325ED63D400AE5310 /* AutoMockable.generated.swift */; };
 		59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */; };
 		59E75E5125D1AE4E0092E502 /* FeedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */; };
 		59F79F6D25DD8A1A00868CF1 /* FeedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */; };
@@ -50,6 +56,12 @@
 		430E0DBA358264B31A37B66B /* Pods-SimpleApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleApp.debug.xcconfig"; path = "Target Support Files/Pods-SimpleApp/Pods-SimpleApp.debug.xcconfig"; sourceTree = "<group>"; };
 		596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RetyCollectionViewCell.swift; sourceTree = "<group>"; };
 		596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RetyCollectionViewCell.xib; sourceTree = "<group>"; };
+		596970F325EC59AA00AE5310 /* GalleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
+		596970F425EC59AA00AE5310 /* GalleryViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GalleryViewController.xib; sourceTree = "<group>"; };
+		5969710525ED580B00AE5310 /* FetcherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetcherProtocol.swift; sourceTree = "<group>"; };
+		5969710925ED5D6600AE5310 /* FeedViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewControllerTests.swift; sourceTree = "<group>"; };
+		5969711A25ED61F500AE5310 /* .sourcery.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .sourcery.yml; sourceTree = "<group>"; };
+		5969712325ED63D400AE5310 /* AutoMockable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoMockable.generated.swift; sourceTree = "<group>"; };
 		59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
 		59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedViewController.xib; sourceTree = "<group>"; };
 		59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -110,6 +122,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5969712225ED63D400AE5310 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				5969712325ED63D400AE5310 /* AutoMockable.generated.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		6A0D7C8A1337EBDB5EDDF0A7 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -157,6 +177,7 @@
 				59F79F7425DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.xib */,
 				EC15807725B7568B0000B4A6 /* main.swift */,
 				ECCB8B9125C0560E00E35968 /* Manager.swift */,
+				5969710525ED580B00AE5310 /* FetcherProtocol.swift */,
 				59F79F7B25DDDA1F00868CF1 /* PlaceholderView.swift */,
 				596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */,
 				596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */,
@@ -170,9 +191,12 @@
 		EC15802E25B7501F0000B4A6 /* SimpleAppTests */ = {
 			isa = PBXGroup;
 			children = (
+				5969711A25ED61F500AE5310 /* .sourcery.yml */,
+				5969712225ED63D400AE5310 /* Mocks */,
 				EC15808925B75AD20000B4A6 /* Setup */,
 				EC15803125B7501F0000B4A6 /* Info.plist */,
 				EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */,
+				5969710925ED5D6600AE5310 /* FeedViewControllerTests.swift */,
 				ECCB8B9525C0565700E35968 /* ManagerTests.swift */,
 				ECF2B3AA25EA253F00EBB452 /* AppMocks.swift */,
 			);
@@ -216,6 +240,7 @@
 			buildConfigurationList = EC15804225B7501F0000B4A6 /* Build configuration list for PBXNativeTarget "SimpleAppTests" */;
 			buildPhases = (
 				B93F58277126F75F2CEF89CA /* [CP] Check Pods Manifest.lock */,
+				5969711525ED604F00AE5310 /* Sourcery */,
 				EC15802725B7501F0000B4A6 /* Sources */,
 				EC15802825B7501F0000B4A6 /* Frameworks */,
 				EC15802925B7501F0000B4A6 /* Resources */,
@@ -286,12 +311,31 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5969711B25ED61F500AE5310 /* .sourcery.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5969711525ED604F00AE5310 /* Sourcery */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Sourcery;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${PODS_ROOT}/Sourcery/bin/sourcery --config SimpleAppTests/.sourcery.yml\n";
+		};
 		B93F58277126F75F2CEF89CA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -367,6 +411,7 @@
 				EC15801925B7501C0000B4A6 /* AppDelegate.swift in Sources */,
 				EC15807825B7568B0000B4A6 /* main.swift in Sources */,
 				EC15801B25B7501C0000B4A6 /* SceneDelegate.swift in Sources */,
+				5969710625ED580B00AE5310 /* FetcherProtocol.swift in Sources */,
 				59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */,
 				59F79F7525DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.swift in Sources */,
 				59F79F6D25DD8A1A00868CF1 /* FeedCollectionViewCell.swift in Sources */,
@@ -379,7 +424,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				EC15808025B758E60000B4A6 /* TestingSceneDelegate.swift in Sources */,
+				5969710A25ED5D6600AE5310 /* FeedViewControllerTests.swift in Sources */,
 				ECCB8B9625C0565700E35968 /* ManagerTests.swift in Sources */,
+				5969712425ED63D400AE5310 /* AutoMockable.generated.swift in Sources */,
 				EC15807225B756320000B4A6 /* TestAppDelegate.swift in Sources */,
 				EC15808F25B75AEE0000B4A6 /* ViewControllerTests.swift in Sources */,
 				EC15808425B7591C0000B4A6 /* TestingViewController.swift in Sources */,
