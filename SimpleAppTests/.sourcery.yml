@@ -1,0 +1,10 @@
+sources:
+    include:
+        - ../SimpleApp
+templates:
+    - ../Sourcery/AutoMockable.stencil
+output:
+    Mocks
+args:
+    testable_imports:
+        - SimpleApp

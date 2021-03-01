@@ -10,5 +10,6 @@ target 'SimpleApp' do
   target 'SimpleAppTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'Sourcery'
   end
 end

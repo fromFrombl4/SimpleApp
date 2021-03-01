@@ -9,7 +9,7 @@ class FeedViewController: UIViewController {
         static let paginationLoadingOffset = 1
         static let cellHeight: CGFloat = 200
     }
-    @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet private weak var collection: UICollectionView!
     private var feedArray: [Post] = []
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
@@ -18,6 +18,59 @@ class FeedViewController: UIViewController {
     private var isFailedOnPagination = false
     private var paginationRetryAction: (() -> Void)?
     private var placeholder = PlaceholderView()
+
+    private let fetcher: FetcherProtocol
+
+    // MARK: - init
+
+    init(fetcher: FetcherProtocol) {
+        self.fetcher = fetcher
+        super.init(nibName: String(describing: FeedViewController.self), bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - lifecycle
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCollection()
+        setupPlaceHolder()
+        title = "Feed"
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshData()
+    }
+
+    @objc func refresh(_ sender: AnyObject) {
+        guard isLoading == false else {
+            refreshControl.endRefreshing()
+            return
+        }
+        isLoading = true
+        print(#function)
+        fetcher.loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
+            self?.isLoading = false
+            self?.refreshControl.endRefreshing()
+            switch result {
+            case .success(let feed):
+                self?.isFirstLoading = false
+                self?.feedArray = feed
+                self?.isEmptyServerResponse = false
+                self?.collection.reloadData()
+            case .failure:
+                self?.feedArray = []
+                self?.placeholder.isHidden = false
+                self?.collection.reloadData()
+            }
+        }
+    }
+
+    // MARK: - setup
 
     private func setupCollection() {
         collection.delegate = self
@@ -48,42 +101,6 @@ class FeedViewController: UIViewController {
         collection.showsHorizontalScrollIndicator = false
     }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupCollection()
-        setupPlaceHolder()
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        refreshData()
-    }
-
-    @objc func refresh(_ sender: AnyObject) {
-        guard isLoading == false else {
-            refreshControl.endRefreshing()
-            return
-        }
-        isLoading = true
-        print(#function)
-        Manager.shared
-            .loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
-                self?.isLoading = false
-                self?.refreshControl.endRefreshing()
-                switch result {
-                case .success(let feed):
-                    self?.isFirstLoading = false
-                    self?.feedArray = feed
-                    self?.isEmptyServerResponse = false
-                    self?.collection.reloadData()
-                case .failure:
-                    self?.feedArray = []
-                    self?.placeholder.isHidden = false
-                    self?.collection.reloadData()
-                }
-            }
-    }
-
     private func setupPlaceHolder() {
         view.addSubview(placeholder)
         NSLayoutConstraint.activate([
@@ -106,21 +123,20 @@ class FeedViewController: UIViewController {
             return
         }
         isLoading = true
-        Manager.shared
-            .loadItems(offset: offset, limit: limit) { [weak self] result in
-                self?.isLoading = false
-                switch result {
-                case .success(let feed):
-                    self?.isEmptyServerResponse = feed.isEmpty
-                    self?.feedArray.append(contentsOf: feed)
-                    self?.collection.reloadData()
-                    self?.isFailedOnPagination = false
-                case .failure:
-                    self?.isFailedOnPagination = true
-                    print("error")
-                    self?.collection.reloadData()
-                }
+        fetcher.loadItems(offset: offset, limit: limit) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success(let feed):
+                self?.isEmptyServerResponse = feed.isEmpty
+                self?.feedArray.append(contentsOf: feed)
+                self?.collection.reloadData()
+                self?.isFailedOnPagination = false
+            case .failure:
+                self?.isFailedOnPagination = true
+                print("error")
+                self?.collection.reloadData()
             }
+        }
     }
 }
 
