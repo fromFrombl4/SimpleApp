@@ -9,7 +9,7 @@ class GalleryViewController: UIViewController {
         static let paginationLoadingOffset = 1
         static let cellHeight: CGFloat = 200
     }
-    @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet private weak var collection: UICollectionView!
     private var feedArray: [Post] = []
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
@@ -19,35 +19,20 @@ class GalleryViewController: UIViewController {
     private var paginationRetryAction: (() -> Void)?
     private var placeholder = PlaceholderView()
 
+    private var fetcher: FetcherProtocol
 
-    private func setupCollection() {
-        collection.delegate = self
-        collection.dataSource = self
-        collection.register(
-            UINib(
-                nibName: String.init(describing: FeedCollectionViewCell.self
-                ), bundle: nil
-            ), forCellWithReuseIdentifier: Constants.cellReuseIdentifier
-        )
-        collection.register(
-            UINib(
-                nibName: String.init(describing: LoadingIndicatorCollectionViewCell.self
-                ), bundle: nil
-            ), forCellWithReuseIdentifier: Constants.loadingCellIdentifier
-        )
-        collection.register(
-            UINib(
-                nibName: String.init(describing: RetyCollectionViewCell.self
-                ), bundle: nil
-            ), forCellWithReuseIdentifier: Constants.retryCellIdentifier
-        )
-        let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
-        collectionLayout?.minimumLineSpacing = 0
-        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
-        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
-        collection.addSubview(refreshControl)
-        collection.showsHorizontalScrollIndicator = false
+    // MARK: - init
+
+    init(fetcher: FetcherProtocol) {
+        self.fetcher = fetcher
+        super.init(nibName: String(describing: GalleryViewController.self), bundle: nil)
     }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - lifecycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,22 +53,49 @@ class GalleryViewController: UIViewController {
         }
         isLoading = true
         print(#function)
-        Manager.shared
-            .loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
-                self?.isLoading = false
-                self?.refreshControl.endRefreshing()
-                switch result {
-                case .success(let feed):
-                    self?.isFirstLoading = false
-                    self?.feedArray = feed
-                    self?.isEmptyServerResponse = false
-                    self?.collection.reloadData()
-                case .failure:
-                    self?.feedArray = []
-                    self?.placeholder.isHidden = false
-                    self?.collection.reloadData()
-                }
+        fetcher.loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
+            self?.isLoading = false
+            self?.refreshControl.endRefreshing()
+            switch result {
+            case .success(let feed):
+                self?.isFirstLoading = false
+                self?.feedArray = feed
+                self?.isEmptyServerResponse = false
+                self?.collection.reloadData()
+            case .failure:
+                self?.feedArray = []
+                self?.placeholder.isHidden = false
+                self?.collection.reloadData()
             }
+        }
+    }
+
+    // MARK: - setup
+
+    private func setupCollection() {
+        collection.delegate = self
+        collection.dataSource = self
+        collection.register(
+            GalleryCollectionViewCell.self, forCellWithReuseIdentifier: Constants.cellReuseIdentifier
+        )
+        collection.register(
+            UINib(
+                nibName: String.init(describing: LoadingIndicatorCollectionViewCell.self
+                ), bundle: nil
+            ), forCellWithReuseIdentifier: Constants.loadingCellIdentifier
+        )
+        collection.register(
+            UINib(
+                nibName: String.init(describing: RetyCollectionViewCell.self
+                ), bundle: nil
+            ), forCellWithReuseIdentifier: Constants.retryCellIdentifier
+        )
+        let collectionLayout = collection.collectionViewLayout as? UICollectionViewFlowLayout
+        collectionLayout?.minimumLineSpacing = 0
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(self.refresh(_:)), for: .valueChanged)
+        collection.addSubview(refreshControl)
+        collection.showsHorizontalScrollIndicator = false
     }
 
     private func setupPlaceHolder() {
@@ -108,21 +120,20 @@ class GalleryViewController: UIViewController {
             return
         }
         isLoading = true
-        Manager.shared
-            .loadItems(offset: offset, limit: limit) { [weak self] result in
-                self?.isLoading = false
-                switch result {
-                case .success(let feed):
-                    self?.isEmptyServerResponse = feed.isEmpty
-                    self?.feedArray.append(contentsOf: feed)
-                    self?.collection.reloadData()
-                    self?.isFailedOnPagination = false
-                case .failure:
-                    self?.isFailedOnPagination = true
-                    print("error")
-                    self?.collection.reloadData()
-                }
+        fetcher.loadItems(offset: offset, limit: limit) { [weak self] result in
+            self?.isLoading = false
+            switch result {
+            case .success(let feed):
+                self?.isEmptyServerResponse = feed.isEmpty
+                self?.feedArray.append(contentsOf: feed)
+                self?.collection.reloadData()
+                self?.isFailedOnPagination = false
+            case .failure:
+                self?.isFailedOnPagination = true
+                print("error")
+                self?.collection.reloadData()
             }
+        }
     }
 }
 
@@ -173,10 +184,9 @@ extension GalleryViewController: UICollectionViewDataSource {
             guard let cell = collection.dequeueReusableCell(
                 withReuseIdentifier: Constants.cellReuseIdentifier,
                 for: indexPath
-            ) as? FeedCollectionViewCell else {
+            ) as? GalleryCollectionViewCell else {
                 return UICollectionViewCell()
             }
-            cell.post = feedArray[indexPath.row]
             return cell
         }
     }
@@ -205,22 +215,16 @@ extension GalleryViewController: UICollectionViewDelegateFlowLayout {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        if indexPath.row == feedArray.count {
-            return CGSize(width: UIScreen.main.bounds.width / 2, height: Constants.cellHeight)
-        } else {
-            let constraintRect = CGSize(width: UIScreen.main.bounds.width / 2 - 32, height: .greatestFiniteMagnitude)
+    let side = collectionView.frame.size.width / 2 - 2
+    return CGSize(width: side, height: side)
+    }
 
-            let result = feedArray[indexPath.row].body
-                .boundingRect(
-                    with: constraintRect,
-                    options: [],
-                    attributes: [.font: UIFont.systemFont(ofSize: 17)],
-                    context: nil
-                )
-            print(feedArray[indexPath.row].body)
-            print(result.size)
-            return result.size
-        }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
     }
 }
 
