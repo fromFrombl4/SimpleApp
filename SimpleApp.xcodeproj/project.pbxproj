@@ -38,6 +38,8 @@
 		EC15808F25B75AEE0000B4A6 /* ViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */; };
 		ECCB8B9225C0560E00E35968 /* Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB8B9125C0560E00E35968 /* Manager.swift */; };
 		ECCB8B9625C0565700E35968 /* ManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECCB8B9525C0565700E35968 /* ManagerTests.swift */; };
+		ECEBB3C925F935370092F86F /* SplashImageFetcherProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEBB3C825F935370092F86F /* SplashImageFetcherProtocol.swift */; };
+		ECEBB3D725F937010092F86F /* SplashImageFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEBB3D625F937010092F86F /* SplashImageFetcher.swift */; };
 		ECF2B3AB25EA253F00EBB452 /* AppMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECF2B3AA25EA253F00EBB452 /* AppMocks.swift */; };
 /* End PBXBuildFile section */
 
@@ -92,6 +94,8 @@
 		EC15808E25B75AEE0000B4A6 /* ViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerTests.swift; sourceTree = "<group>"; };
 		ECCB8B9125C0560E00E35968 /* Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manager.swift; sourceTree = "<group>"; };
 		ECCB8B9525C0565700E35968 /* ManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManagerTests.swift; sourceTree = "<group>"; };
+		ECEBB3C825F935370092F86F /* SplashImageFetcherProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashImageFetcherProtocol.swift; sourceTree = "<group>"; };
+		ECEBB3D625F937010092F86F /* SplashImageFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashImageFetcher.swift; sourceTree = "<group>"; };
 		ECF2B3AA25EA253F00EBB452 /* AppMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMocks.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -183,6 +187,8 @@
 				EC15807725B7568B0000B4A6 /* main.swift */,
 				ECCB8B9125C0560E00E35968 /* Manager.swift */,
 				5969710525ED580B00AE5310 /* FetcherProtocol.swift */,
+				ECEBB3C825F935370092F86F /* SplashImageFetcherProtocol.swift */,
+				ECEBB3D625F937010092F86F /* SplashImageFetcher.swift */,
 				59F79F7B25DDDA1F00868CF1 /* PlaceholderView.swift */,
 				596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */,
 				596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */,
@@ -417,10 +423,12 @@
 				596970B725E6C37E00AE5310 /* RetyCollectionViewCell.swift in Sources */,
 				EC15801925B7501C0000B4A6 /* AppDelegate.swift in Sources */,
 				EC15807825B7568B0000B4A6 /* main.swift in Sources */,
+				ECEBB3D725F937010092F86F /* SplashImageFetcher.swift in Sources */,
 				EC15801B25B7501C0000B4A6 /* SceneDelegate.swift in Sources */,
 				5969710625ED580B00AE5310 /* FetcherProtocol.swift in Sources */,
 				59E75E5025D1AE4E0092E502 /* FeedViewController.swift in Sources */,
 				59F79F7525DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.swift in Sources */,
+				ECEBB3C925F935370092F86F /* SplashImageFetcherProtocol.swift in Sources */,
 				59F79F6D25DD8A1A00868CF1 /* FeedCollectionViewCell.swift in Sources */,
 				5969715625EEC67700AE5310 /* GalleryCollectionViewCell.swift in Sources */,
 				ECCB8B9225C0560E00E35968 /* Manager.swift in Sources */,

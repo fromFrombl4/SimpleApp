@@ -13,7 +13,7 @@ class ViewController: UIViewController {
         let feedVC = UINavigationController(
             rootViewController: FeedViewController(fetcher: Manager.shared)
         )
-        let galleryVC = UINavigationController(rootViewController: GalleryViewController(fetcher: Manager.shared))
+        let galleryVC = UINavigationController(rootViewController: GalleryViewController(fetcher: SplashImageFetcher()))
 
         feedVC.title = "Feed"
         galleryVC.title = "Gallery"
