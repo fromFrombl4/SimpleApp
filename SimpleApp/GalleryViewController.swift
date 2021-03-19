@@ -10,7 +10,7 @@ class GalleryViewController: UIViewController {
         static let cellHeight: CGFloat = 200
     }
     @IBOutlet private weak var collection: UICollectionView!
-    private var feedArray: [Post] = []
+    private var feedArray: [SplashImage] = []
     private var refreshControl = UIRefreshControl()
     private var isLoading = false
     private var isFirstLoading = true
@@ -19,11 +19,11 @@ class GalleryViewController: UIViewController {
     private var paginationRetryAction: (() -> Void)?
     private var placeholder = PlaceholderView()
 
-    private var fetcher: FetcherProtocol
+    private var fetcher: SplashImageFetcherProtocol
 
     // MARK: - init
 
-    init(fetcher: FetcherProtocol) {
+    init(fetcher: SplashImageFetcherProtocol) {
         self.fetcher = fetcher
         super.init(nibName: String(describing: GalleryViewController.self), bundle: nil)
     }
@@ -53,7 +53,7 @@ class GalleryViewController: UIViewController {
         }
         isLoading = true
         print(#function)
-        fetcher.loadItems(offset: 0, limit: Constants.batchSize) { [weak self] result in
+        fetcher.searchImages(query: "macbook", page: 1, perPage: Constants.batchSize) { [weak self] result in
             self?.isLoading = false
             self?.refreshControl.endRefreshing()
             switch result {
@@ -115,12 +115,12 @@ class GalleryViewController: UIViewController {
         refreshControl.sendActions(for: .valueChanged)
     }
 
-    private func paginationLoading(offset: Int, limit: Int = Constants.batchSize) {
+    private func paginationLoading(page: Int, perPage: Int = Constants.batchSize) {
         guard isLoading == false else {
             return
         }
         isLoading = true
-        fetcher.loadItems(offset: offset, limit: limit) { [weak self] result in
+        fetcher.searchImages(query: "macbook", page: page, perPage: perPage) { [weak self] result in
             self?.isLoading = false
             switch result {
             case .success(let feed):
@@ -168,7 +168,8 @@ extension GalleryViewController: UICollectionViewDataSource {
                     }
                     self.isFailedOnPagination = false
                     self.collection.reloadData()
-                    self.paginationLoading(offset: self.feedArray.count)
+                    let page = self.feedArray.count / Constants.batchSize + 1
+                    self.paginationLoading(page: page)
                 }
                 return cell
             } else {
@@ -204,7 +205,8 @@ extension GalleryViewController: UICollectionViewDelegate {
             && isEmptyServerResponse == false
             && isFailedOnPagination == false {
             print(indexPath.row)
-            paginationLoading(offset: feedArray.count)
+            let page = feedArray.count / Constants.batchSize + 1
+            paginationLoading(page: page)
         }
     }
 }
