@@ -188,6 +188,7 @@ extension GalleryViewController: UICollectionViewDataSource {
             ) as? GalleryCollectionViewCell else {
                 return UICollectionViewCell()
             }
+            cell.splashImage = feedArray[indexPath.row]
             return cell
         }
     }

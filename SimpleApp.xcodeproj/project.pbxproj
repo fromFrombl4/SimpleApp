@@ -174,10 +174,11 @@
 				EC15801825B7501C0000B4A6 /* AppDelegate.swift */,
 				EC15802125B7501F0000B4A6 /* Assets.xcassets */,
 				59F79F6B25DD8A1A00868CF1 /* FeedCollectionViewCell.swift */,
-				5969715525EEC67700AE5310 /* GalleryCollectionViewCell.swift */,
 				59F79F6C25DD8A1A00868CF1 /* FeedCollectionViewCell.xib */,
 				59E75E4E25D1AE4E0092E502 /* FeedViewController.swift */,
 				59E75E4F25D1AE4E0092E502 /* FeedViewController.xib */,
+				5969710525ED580B00AE5310 /* FetcherProtocol.swift */,
+				5969715525EEC67700AE5310 /* GalleryCollectionViewCell.swift */,
 				596970F325EC59AA00AE5310 /* GalleryViewController.swift */,
 				596970F425EC59AA00AE5310 /* GalleryViewController.xib */,
 				EC15802625B7501F0000B4A6 /* Info.plist */,
@@ -186,13 +187,12 @@
 				59F79F7425DDD58200868CF1 /* LoadingIndicatorCollectionViewCell.xib */,
 				EC15807725B7568B0000B4A6 /* main.swift */,
 				ECCB8B9125C0560E00E35968 /* Manager.swift */,
-				5969710525ED580B00AE5310 /* FetcherProtocol.swift */,
-				ECEBB3C825F935370092F86F /* SplashImageFetcherProtocol.swift */,
-				ECEBB3D625F937010092F86F /* SplashImageFetcher.swift */,
 				59F79F7B25DDDA1F00868CF1 /* PlaceholderView.swift */,
 				596970B525E6C37E00AE5310 /* RetyCollectionViewCell.swift */,
 				596970B625E6C37E00AE5310 /* RetyCollectionViewCell.xib */,
 				EC15801A25B7501C0000B4A6 /* SceneDelegate.swift */,
+				ECEBB3D625F937010092F86F /* SplashImageFetcher.swift */,
+				ECEBB3C825F935370092F86F /* SplashImageFetcherProtocol.swift */,
 				EC15801C25B7501C0000B4A6 /* ViewController.swift */,
 				EC15806725B754340000B4A6 /* ViewController.xib */,
 			);
@@ -236,6 +236,7 @@
 				EC15801125B7501C0000B4A6 /* Sources */,
 				EC15801225B7501C0000B4A6 /* Frameworks */,
 				EC15801325B7501C0000B4A6 /* Resources */,
+				9C694AE8B9602F0A9236323D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -347,6 +348,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/Sourcery/bin/sourcery --config SimpleAppTests/.sourcery.yml\n";
+		};
+		9C694AE8B9602F0A9236323D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleApp/Pods-SimpleApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-SimpleApp/Pods-SimpleApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-SimpleApp/Pods-SimpleApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		B93F58277126F75F2CEF89CA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
