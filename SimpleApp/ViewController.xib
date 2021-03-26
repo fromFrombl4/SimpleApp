@@ -14,7 +14,7 @@
                 <outlet property="button" destination="SUo-Pi-pvm" id="8ls-x5-4qX"/>
                 <outlet property="label" destination="dGu-fM-aDI" id="Rpi-Wq-pzW"/>
                 <outlet property="passwordTextField" destination="gZQ-wP-J0V" id="TnV-I7-Ajs"/>
-                <outlet property="saveCredsSwitch" destination="krg-UE-7g4" id="2BX-nC-N1n"/>
+                <outlet property="saveCredsSwitch" destination="krg-UE-7g4" id="CXS-ni-F4F"/>
                 <outlet property="savePasswordLabel" destination="ldQ-ia-7bQ" id="Ua2-yi-b0y"/>
                 <outlet property="usernameTextField" destination="QRL-h3-toI" id="uuQ-fb-iML"/>
                 <outlet property="view" destination="flV-FP-gnI" id="ywN-x0-ypl"/>
@@ -25,15 +25,8 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGu-fM-aDI">
-                    <rect key="frame" x="186" y="437.5" width="42" height="21"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <nil key="textColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SUo-Pi-pvm">
-                    <rect key="frame" x="182" y="613" width="46" height="50"/>
+                    <rect key="frame" x="219" y="283" width="46" height="50"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <state key="normal" title="Button"/>
                     <connections>
@@ -41,31 +34,38 @@
                     </connections>
                 </button>
                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QRL-h3-toI">
-                    <rect key="frame" x="159" y="480" width="97" height="34"/>
+                    <rect key="frame" x="106" y="222" width="97" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                 </textField>
                 <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gZQ-wP-J0V">
-                    <rect key="frame" x="159" y="529" width="97" height="34"/>
+                    <rect key="frame" x="48" y="168" width="97" height="34"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
+                    <textInputTraits key="textInputTraits" enablesReturnKeyAutomatically="YES"/>
                 </textField>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ldQ-ia-7bQ">
-                    <rect key="frame" x="206" y="582" width="42" height="21"/>
+                    <rect key="frame" x="91" y="431" width="42" height="21"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="krg-UE-7g4">
-                    <rect key="frame" x="125" y="623" width="49" height="31"/>
+                    <rect key="frame" x="59" y="293" width="49" height="31"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <connections>
-                        <action selector="saveCredsSwitchPressed:" destination="-1" eventType="touchUpInside" id="xpK-Ae-85p"/>
+                        <action selector="saveCredsSwitchChanged" destination="-1" eventType="valueChanged" id="Fpm-9W-bh6"/>
                     </connections>
                 </switch>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGu-fM-aDI">
+                    <rect key="frame" x="123" y="99" width="42" height="21"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="xb7-kK-dmj"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>

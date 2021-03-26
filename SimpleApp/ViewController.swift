@@ -8,18 +8,25 @@ class ViewController: UIViewController {
     @IBOutlet weak var saveCredsSwitch: UISwitch!
     @IBOutlet weak var savePasswordLabel: UILabel!
 
-    private let username = "user"
-    private let password = "password"
+    private enum Constants {
+        static let userNameKey = "userNameKey"
+        static let passwordKey = "passwordKey"
+        static let isCheckedKey = "isCheckedKey"
+
+        //simulate API user
+        static let username = "user"
+        static let password = "password"
+    }
+
+    private var username: String? = nil
+    private var password: String? = nil
     private var isChecked = false
 
-    @IBAction func saveCredsSwitchPressed(_ sender: Any) {
-        if saveCredsSwitch.isOn == true && usernameTextField.text != nil && passwordTextField.text != nil {
-            let defaults = UserDefaults.standard
-            defaults.set(username, forKey: "username")
-            defaults.set(password, forKey: "password")
-        }
-        usernameTextField.text = UserDefaults.standard.object(forKey: username) as? String
-        passwordTextField.text = UserDefaults.standard.object(forKey: password) as? String
+    @IBAction func saveCredsSwitchChanged() {
+        //update UD isCheckedKey
+
+        //if OFF
+        // remove userNameKey & passwordKey
     }
 
     override func viewDidLoad() {
@@ -32,10 +39,42 @@ class ViewController: UIViewController {
         button.setTitle("Sign In", for: .normal)
         savePasswordLabel.text = "Save credentials"
         saveCredsSwitch.isOn = false
+
+        usernameTextField.addTarget(
+            self,
+            action: #selector(usernameTextFieldChanged),
+            for: .editingChanged
+        )
+        passwordTextField.addTarget(
+            self,
+            action: #selector(passwordTextFieldChanged),
+            for: .editingChanged
+        )
+
+        setupLayout()
+
+        restoreNamePasswordIfNeeded()
     }
 
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+    func restoreNamePasswordIfNeeded() {
+        if let isCheckedKey = UserDefaults.standard.value(forKey: Constants.isCheckedKey) as? Bool, isCheckedKey {
+            restoreStoredNamePassword()
+        }
+    }
+
+    func restoreStoredNamePassword() {
+        //set fields
+        //update switch
+    }
+
+    private func setupLayout() {
+        saveCredsSwitch.translatesAutoresizingMaskIntoConstraints = false
+        savePasswordLabel.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
+        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
+
         label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200).isActive = true
         label.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
         label.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50).isActive = true
@@ -59,16 +98,14 @@ class ViewController: UIViewController {
         button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
         button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50).isActive = true
         button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        saveCredsSwitch.translatesAutoresizingMaskIntoConstraints = false
-        savePasswordLabel.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        button.translatesAutoresizingMaskIntoConstraints = false
+
     }
 
     @IBAction func buttonPressed(_ sender: UIButton) {
-        if usernameTextField.text == username && passwordTextField.text == password {
+        if username == Constants.username && password == Constants.password {
+            //if swiftch ON save user&pass to UD
+
+
             let tabBarVC = UITabBarController()
             let feedVC = UINavigationController(
                 rootViewController: FeedViewController(fetcher: Manager.shared)
@@ -94,19 +131,17 @@ class ViewController: UIViewController {
             self.present(alert, animated: true, completion: nil)
         }
     }
+
+    @objc func usernameTextFieldChanged() {
+        print(usernameTextField.text)
+    }
+
+    @objc func passwordTextFieldChanged() {
+        print(passwordTextField.text)
+    }
 }
 
 extension ViewController: UITextFieldDelegate {
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        if saveCredsSwitch.isOn == true {
-            let defaults = UserDefaults.standard
-            defaults.set(textField, forKey: "username")
-            defaults.set(textField, forKey: "password")
-        }
-        usernameTextField.text = UserDefaults.standard.object(forKey: username) as? String
-        passwordTextField.text = UserDefaults.standard.object(forKey: password) as? String
-        return true
-    }
     func textFieldShouldReturn(
         _ textField: UITextField
     ) -> Bool {
