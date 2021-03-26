@@ -1,20 +1,34 @@
 PODS:
+  - Hex (6.1.0)
+  - Kingfisher (5.15.8):
+    - Kingfisher/Core (= 5.15.8)
+  - Kingfisher/Core (5.15.8)
+  - M13Checkbox (3.4.0)
   - Sourcery (1.2.1)
   - SwiftLint (0.42.0)
 
 DEPENDENCIES:
+  - Hex
+  - Kingfisher
+  - M13Checkbox
   - Sourcery
   - SwiftLint
 
 SPEC REPOS:
   trunk:
+    - Hex
+    - Kingfisher
+    - M13Checkbox
     - Sourcery
     - SwiftLint
 
 SPEC CHECKSUMS:
+  Hex: 2f67dd0cbb178cb24992e7529b025b8d16ff0bdc
+  Kingfisher: a3c03d702433fa6cfedabb2bddbe076fb8f2e902
+  M13Checkbox: 6f59404540ac98ba83a3d1afac335895a40c6a5d
   Sourcery: 4c6e420c227f95d566f133753a438b4ab026ced6
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
 
-PODFILE CHECKSUM: 06e86e9c143ab82123c02ad202ae0ed242a9749f
+PODFILE CHECKSUM: b0598728fbd706669584fa605117d574dadb9109
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.0
