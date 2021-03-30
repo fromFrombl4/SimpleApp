@@ -24,9 +24,12 @@ class ViewController: UIViewController {
 
     @IBAction func saveCredsSwitchChanged() {
         //update UD isCheckedKey
-
         //if OFF
         // remove userNameKey & passwordKey
+        if saveCredsSwitch.isOn == false {
+            UserDefaults.standard.removeObject(forKey: Constants.userNameKey)
+            UserDefaults.standard.removeObject(forKey: Constants.passwordKey)
+        }
     }
 
     override func viewDidLoad() {
@@ -51,8 +54,6 @@ class ViewController: UIViewController {
             for: .editingChanged
         )
 
-        setupLayout()
-
         restoreNamePasswordIfNeeded()
     }
 
@@ -65,46 +66,19 @@ class ViewController: UIViewController {
     func restoreStoredNamePassword() {
         //set fields
         //update switch
-    }
-
-    private func setupLayout() {
-        saveCredsSwitch.translatesAutoresizingMaskIntoConstraints = false
-        savePasswordLabel.translatesAutoresizingMaskIntoConstraints = false
-        label.translatesAutoresizingMaskIntoConstraints = false
-        usernameTextField.translatesAutoresizingMaskIntoConstraints = false
-        passwordTextField.translatesAutoresizingMaskIntoConstraints = false
-        button.translatesAutoresizingMaskIntoConstraints = false
-
-        label.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 200).isActive = true
-        label.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
-        label.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50).isActive = true
-        label.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        usernameTextField.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 10).isActive = true
-        usernameTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
-        usernameTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50).isActive = true
-        usernameTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        passwordTextField.topAnchor.constraint(equalTo: usernameTextField.bottomAnchor, constant: 10).isActive = true
-        passwordTextField.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
-        passwordTextField.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50).isActive = true
-        passwordTextField.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        saveCredsSwitch.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10).isActive = true
-        saveCredsSwitch.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50).isActive = true
-        saveCredsSwitch.bottomAnchor.constraint(equalTo: button.topAnchor, constant: 10).isActive = true
-        savePasswordLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10).isActive = true
-        savePasswordLabel.leadingAnchor.constraint(equalTo: saveCredsSwitch.trailingAnchor, constant: 10).isActive = true
-        savePasswordLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50).isActive = true
-        savePasswordLabel.bottomAnchor.constraint(equalTo: button.topAnchor, constant: 10).isActive = true
-        button.topAnchor.constraint(equalTo: savePasswordLabel.bottomAnchor, constant: 10).isActive = true
-        button.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50).isActive = true
-        button.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50).isActive = true
-        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
-
+        if saveCredsSwitch.isOn {
+            username = UserDefaults.standard.object(forKey: Constants.userNameKey) as? String
+            password = UserDefaults.standard.object(forKey: Constants.passwordKey) as? String
+        }
     }
 
     @IBAction func buttonPressed(_ sender: UIButton) {
         if username == Constants.username && password == Constants.password {
             //if swiftch ON save user&pass to UD
-
+            if saveCredsSwitch.isOn {
+                UserDefaults.standard.set(username, forKey: Constants.userNameKey)
+                UserDefaults.standard.set(password, forKey: Constants.passwordKey)
+            }
 
             let tabBarVC = UITabBarController()
             let feedVC = UINavigationController(
