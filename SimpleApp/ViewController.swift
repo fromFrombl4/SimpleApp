@@ -12,24 +12,16 @@ class ViewController: UIViewController {
         static let userNameKey = "userNameKey"
         static let passwordKey = "passwordKey"
         static let isCheckedKey = "isCheckedKey"
-
-        //simulate API user
         static let username = "user"
         static let password = "password"
     }
 
-    private var username: String? = nil
-    private var password: String? = nil
+    private var username: String?
+    private var password: String?
     private var isChecked = false
 
     @IBAction func saveCredsSwitchChanged() {
-        //update UD isCheckedKey
-        //if OFF
-        // remove userNameKey & passwordKey
-        if saveCredsSwitch.isOn == false {
-            UserDefaults.standard.removeObject(forKey: Constants.userNameKey)
-            UserDefaults.standard.removeObject(forKey: Constants.passwordKey)
-        }
+        removeNamePasswordIfNeeded()
     }
 
     override func viewDidLoad() {
@@ -45,73 +37,92 @@ class ViewController: UIViewController {
 
         usernameTextField.addTarget(
             self,
-            action: #selector(usernameTextFieldChanged),
+            action: #selector(updateUsernameProperty),
             for: .editingChanged
         )
         passwordTextField.addTarget(
             self,
-            action: #selector(passwordTextFieldChanged),
+            action: #selector(updatePasswordProperty),
             for: .editingChanged
         )
-
         restoreNamePasswordIfNeeded()
     }
 
-    func restoreNamePasswordIfNeeded() {
+    private func removeNamePasswordIfNeeded() {
+        if !saveCredsSwitch.isOn {
+            UserDefaults.standard.removeObject(forKey: Constants.userNameKey)
+            UserDefaults.standard.removeObject(forKey: Constants.passwordKey)
+        }
+    }
+
+    private func saveNamePasswordIfNeeded() {
+        if saveCredsSwitch.isOn {
+            UserDefaults.standard.set(username, forKey: Constants.userNameKey)
+            UserDefaults.standard.set(password, forKey: Constants.passwordKey)
+        }
+    }
+
+    private func restoreNamePasswordIfNeeded() {
         if let isCheckedKey = UserDefaults.standard.value(forKey: Constants.isCheckedKey) as? Bool, isCheckedKey {
             restoreStoredNamePassword()
         }
     }
 
     func restoreStoredNamePassword() {
-        //set fields
-        //update switch
-        if saveCredsSwitch.isOn {
-            username = UserDefaults.standard.object(forKey: Constants.userNameKey) as? String
-            password = UserDefaults.standard.object(forKey: Constants.passwordKey) as? String
+        username = UserDefaults.standard.object(forKey: Constants.userNameKey) as? String
+        password = UserDefaults.standard.object(forKey: Constants.passwordKey) as? String
+    }
+
+    private func showHomeController() {
+        let tabBarVC = UITabBarController()
+        let feedVC = UINavigationController(
+            rootViewController: FeedViewController(fetcher: Manager.shared)
+        )
+        let galleryVC = UINavigationController(
+            rootViewController: GalleryViewController(fetcher: SplashImageFetcher())
+        )
+        feedVC.title = "Feed"
+        galleryVC.title = "Gallery"
+        tabBarVC.setViewControllers([feedVC, galleryVC], animated: true)
+        guard let items = tabBarVC.tabBar.items else {
+            return
         }
+        let images = ["house", "star"]
+        for x in 0..<items.count {
+            items[x].image = UIImage(systemName: images[x])
+        }
+        tabBarVC.modalPresentationStyle = .fullScreen
+        present(tabBarVC, animated: true, completion: nil)
+    }
+
+    private func showOopsAlert() {
+        let alert = UIAlertController(title: "Oops!", message: "Your credentials are wrong", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+
+    private func saveSwitchState() {
+        UserDefaults.standard.set(saveCredsSwitch.isOn, forKey: Constants.isCheckedKey)
     }
 
     @IBAction func buttonPressed(_ sender: UIButton) {
         if username == Constants.username && password == Constants.password {
-            //if swiftch ON save user&pass to UD
-            if saveCredsSwitch.isOn {
-                UserDefaults.standard.set(username, forKey: Constants.userNameKey)
-                UserDefaults.standard.set(password, forKey: Constants.passwordKey)
-            }
-
-            let tabBarVC = UITabBarController()
-            let feedVC = UINavigationController(
-                rootViewController: FeedViewController(fetcher: Manager.shared)
-            )
-            let galleryVC = UINavigationController(
-                rootViewController: GalleryViewController(fetcher: SplashImageFetcher())
-            )
-            feedVC.title = "Feed"
-            galleryVC.title = "Gallery"
-            tabBarVC.setViewControllers([feedVC, galleryVC], animated: true)
-            guard let items = tabBarVC.tabBar.items else {
-                return
-            }
-            let images = ["house", "star"]
-            for x in 0..<items.count {
-                items[x].image = UIImage(systemName: images[x])
-            }
-            tabBarVC.modalPresentationStyle = .fullScreen
-            present(tabBarVC, animated: true, completion: nil)
+            saveNamePasswordIfNeeded()
+            saveSwitchState()
+            showHomeController()
         } else {
-            let alert = UIAlertController(title: "Oops!", message: "Your credentials are wrong", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            self.present(alert, animated: true, completion: nil)
+            showOopsAlert()
         }
     }
 
-    @objc func usernameTextFieldChanged() {
-        print(usernameTextField.text)
+    @objc func updateUsernameProperty() {
+        print(usernameTextField.text as Any)
+        username = usernameTextField.text
     }
 
-    @objc func passwordTextFieldChanged() {
-        print(passwordTextField.text)
+    @objc func updatePasswordProperty() {
+        print(passwordTextField.text as Any)
+        password = passwordTextField.text
     }
 }
 

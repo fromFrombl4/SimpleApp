@@ -3,7 +3,6 @@ import Hex
 import Kingfisher
 
 class GalleryCollectionViewCell: UICollectionViewCell {
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor(cgColor: CGColor(red: 0, green: 2, blue: 3, alpha: 0.3))
@@ -22,9 +21,8 @@ class GalleryCollectionViewCell: UICollectionViewCell {
     }()
 
     let label: UILabel = {
-        var splashImage: SplashImage?
         let labelV = UILabel()
-        labelV.backgroundColor = UIColor(hex: splashImage?.color ?? "ed10034")
+        labelV.backgroundColor = UIColor(hex: "ff0000")
         labelV.translatesAutoresizingMaskIntoConstraints = false
         labelV.numberOfLines = 0
         return labelV
@@ -45,6 +43,7 @@ class GalleryCollectionViewCell: UICollectionViewCell {
                 imageView.image = nil
                 return
             }
+            label.backgroundColor = UIColor(hex: splashImage.color)
             imageView.kf.setImage(with: urlRegular)
         }
     }
