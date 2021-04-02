@@ -28,12 +28,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         usernameTextField.delegate = self
         passwordTextField.delegate = self
-        passwordTextField.isSecureTextEntry = true
+        passwordTextField.isSecureTextEntry = false
         label.text = "SimpleApp"
         label.textAlignment = .center
         button.setTitle("Sign In", for: .normal)
         savePasswordLabel.text = "Save credentials"
-        saveCredsSwitch.isOn = false
 
         usernameTextField.addTarget(
             self,
@@ -46,17 +45,25 @@ class ViewController: UIViewController {
             for: .editingChanged
         )
         restoreNamePasswordIfNeeded()
+        restoreSwitchState()
     }
 
     private func removeNamePasswordIfNeeded() {
-        if !saveCredsSwitch.isOn {
+        let expression = !saveCredsSwitch.isOn
+        print(#function + "\(expression)")
+        if expression {
             UserDefaults.standard.removeObject(forKey: Constants.userNameKey)
             UserDefaults.standard.removeObject(forKey: Constants.passwordKey)
         }
     }
 
     private func saveNamePasswordIfNeeded() {
-        if saveCredsSwitch.isOn {
+        let expression = saveCredsSwitch.isOn
+        print(#function + "\(expression)")
+        if expression {
+            username = usernameTextField.text
+            password = passwordTextField.text
+
             UserDefaults.standard.set(username, forKey: Constants.userNameKey)
             UserDefaults.standard.set(password, forKey: Constants.passwordKey)
         }
@@ -69,8 +76,14 @@ class ViewController: UIViewController {
     }
 
     func restoreStoredNamePassword() {
-        username = UserDefaults.standard.object(forKey: Constants.userNameKey) as? String
-        password = UserDefaults.standard.object(forKey: Constants.passwordKey) as? String
+        usernameTextField.text = UserDefaults.standard.value(forKey: Constants.userNameKey) as? String
+        passwordTextField.text = UserDefaults.standard.value(forKey: Constants.passwordKey) as? String
+        updateUsernameProperty()
+        updatePasswordProperty()
+    }
+
+    func restoreSwitchState() {
+        saveCredsSwitch.isOn = (UserDefaults.standard.value(forKey: Constants.isCheckedKey) as? Bool) ?? false
     }
 
     private func showHomeController() {
