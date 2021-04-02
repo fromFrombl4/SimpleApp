@@ -22,13 +22,12 @@ class GalleryCollectionViewCell: UICollectionViewCell {
 
     let label: UILabel = {
         let labelV = UILabel()
-        labelV.backgroundColor = UIColor(hex: "ff0000")
         labelV.translatesAutoresizingMaskIntoConstraints = false
         labelV.numberOfLines = 0
         return labelV
     }()
 
-    override func prepareForReuse() { // очистить ячейку до первоначального состояния
+    override func prepareForReuse() {
         super.prepareForReuse()
         label.isHidden = false
         label.text = nil

@@ -18,7 +18,6 @@ class ViewController: UIViewController {
 
     private var username: String?
     private var password: String?
-    private var isChecked = false
 
     @IBAction func saveCredsSwitchChanged() {
         removeNamePasswordIfNeeded()
@@ -28,7 +27,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         usernameTextField.delegate = self
         passwordTextField.delegate = self
-        passwordTextField.isSecureTextEntry = false
+        passwordTextField.isSecureTextEntry = true
         label.text = "SimpleApp"
         label.textAlignment = .center
         button.setTitle("Sign In", for: .normal)
@@ -50,7 +49,6 @@ class ViewController: UIViewController {
 
     private func removeNamePasswordIfNeeded() {
         let expression = !saveCredsSwitch.isOn
-        print(#function + "\(expression)")
         if expression {
             UserDefaults.standard.removeObject(forKey: Constants.userNameKey)
             UserDefaults.standard.removeObject(forKey: Constants.passwordKey)
@@ -59,11 +57,7 @@ class ViewController: UIViewController {
 
     private func saveNamePasswordIfNeeded() {
         let expression = saveCredsSwitch.isOn
-        print(#function + "\(expression)")
         if expression {
-            username = usernameTextField.text
-            password = passwordTextField.text
-
             UserDefaults.standard.set(username, forKey: Constants.userNameKey)
             UserDefaults.standard.set(password, forKey: Constants.passwordKey)
         }
